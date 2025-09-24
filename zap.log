@@ -1,0 +1,4 @@
+{"level":"info","ts":1758172548.771366,"caller":"zap_test/main.go:20","msg":"failed to fetch URL","url":"http://www.baidu.com","attempt":3,"backoff":1}
+{"level":"info","ts":1758172548.771366,"caller":"zap_test/main.go:26","msg":"Failed to fetch URL: http://www.baidu.com"}
+{"level":"info","ts":1758378512.0411007,"caller":"zap_test/main.go:20","msg":"failed to fetch URL","url":"http://www.baidu.com","attempt":3,"backoff":1}
+{"level":"info","ts":1758378512.0416222,"caller":"zap_test/main.go:26","msg":"Failed to fetch URL: http://www.baidu.com"}

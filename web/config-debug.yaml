@@ -1,0 +1,8 @@
+name: 'user-web'
+port: 8021
+user_server:
+  host: '127.0.0.1'
+  port: 5005
+
+jwt:
+  key: '996948441'
