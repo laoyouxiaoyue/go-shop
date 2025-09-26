@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+service CodeService{
+  // 发送验证码
+  rpc SendCode(SendCodeRequest)returns(SendCodeResponse);
+  // 验证验证码
+  rpc VerifyCode(VerifyCodeRequest)returns(VerifyCodeResponse);
+  // 发送消息
+  rpc SendMessage(SendMessageRequest)returns(SendMessageResponse);
+  // 健康检查
+  rpc Ping(PingRequest)returns(PingResponse);
+}
+
+message SendMessageRequest{
+  string addr = 1 ; // 收件人位置
+  string message = 2; // 收件消息
+}
+message SendMessageResponse{
+  bool success = 1; // 是否成功
+  string message = 2; //错误信息
+}
+
+message SendCodeRequest{
+  string addr = 1; // 收件人位置
+  string code = 2; // 验证码
+  string subject = 3; // 验证码主题
+  string content = 4; // 验证码内容
+}
+
+message SendCodeResponse{
+  bool success = 1; // 是否成功
+  string message = 2; // 错误信息
+}
+
+message VerifyCodeRequest{
+  string addr = 1; // 收件人位置
+  string code = 2; // 用户输入的验证码
+  string subject = 3; // 验证码主题
+}
+
+message VerifyCodeResponse{
+  bool success = 1;  // 是否成功
+  string message = 2;  // 错误信息
+}
+
+message PingRequest {
+
+}
+
+// 健康检查响应
+message PingResponse {
+  string status = 1; // 服务状态
+}

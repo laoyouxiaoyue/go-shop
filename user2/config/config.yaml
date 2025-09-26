@@ -1,0 +1,27 @@
+app:
+  env: "development" # production/staging
+  grpc_port: 50051
+  shutdown_timeout: 30s
+
+mysql:
+  dsn: "root:root@tcp(127.0.0.1:13316)/gstecp?charset=utf8mb4&parseTime=True&loc=Local"
+
+
+redis:
+  host: "127.0.0.1"
+  port: 16379
+  password: "redispass"
+  db: 0
+  pool_size: 20
+
+auth:
+  jwt_secret: "wenshuai"
+  access_token_expire: "15m"
+  refresh_token_expire: "7d"
+  issuer: "user-service"
+
+consul:
+  remote_addr: 127.0.0.1
+  remote_port: 8500
+  name: user_service
+  mode: 1
