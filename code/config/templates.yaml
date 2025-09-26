@@ -1,0 +1,29 @@
+templates:
+  verification:
+    id: "verification"  # 模版名字
+    code_length: 6    # 验证码长度
+    expire_seconds: 300   #过期时间
+    max_daily_sends: 10  #一日最大次数
+    provider_template: "SMS_123456789"   #短信提供商模版ID
+    content_template: "您的验证码是：{{.Code}}，{{.ExpireMinutes}}分钟内有效，请勿泄露。"   #短信模版
+  login:
+    id: "login"
+    code_length: 6
+    expire_seconds: 300
+    max_daily_sends: 15
+    provider_template: "SMS_234567890"
+    content_template: "登录验证码：{{.Code}}，{{.ExpireMinutes}}分钟内有效。如非本人操作请忽略。"
+  register:
+    id: "register"
+    code_length: 6
+    expire_seconds: 600
+    max_daily_sends: 5
+    provider_template: "SMS_345678901"
+    content_template: "欢迎注册！验证码：{{.Code}}，{{.ExpireMinutes}}分钟内有效。"
+  reset_password:
+    id: "reset_password"
+    code_length: 6
+    expire_seconds: 600
+    max_daily_sends: 5
+    provider_template: "SMS_456789012"
+    content_template: "重置密码验证码：{{.Code}}，{{.ExpireMinutes}}分钟内有效。"

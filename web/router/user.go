@@ -6,7 +6,7 @@ import (
 )
 
 func InitUserRouter(Router *gin.RouterGroup) {
-	UserRouter := Router.Group("user")
+	UserRouter := Router.Group("old_user")
 	{
 		UserRouter.GET("list", api.GetUserList)
 		UserRouter.POST("login/password", api.PassWordLogin)

@@ -76,16 +76,16 @@ CREATE DATABASE shop CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ### 4. 生成 Protocol Buffers 代码
 ```bash
 # 进入 proto 目录
-cd user/proto
+cd old_user/proto
 
 # 生成 Go 代码
-protoc -I . user.proto --go_out=.
-protoc -I . user.proto --go-grpc_out=.
+protoc -I . old_user.proto --go_out=.
+protoc -I . old_user.proto --go-grpc_out=.
 ```
 
 ### 5. 运行数据库迁移
 ```bash
-cd user/model/main
+cd old_user/model/main
 go run main.go
 ```
 
@@ -93,7 +93,7 @@ go run main.go
 
 #### 启动用户服务 (gRPC)
 ```bash
-cd user
+cd old_user
 go run main.go
 # 默认端口: 5005
 ```
@@ -150,7 +150,7 @@ Authorization: x-token <jwt_token>
 
 ### Web 服务配置 (`web/config-debug.yaml`)
 ```yaml
-name: 'user-web'
+name: 'old_user-web'
 port: 8021
 user_server:
   host: '127.0.0.1'
@@ -206,7 +206,7 @@ type User struct {
 ### 运行测试
 ```bash
 # 用户服务测试
-cd user/service
+cd old_user/service
 go test -v
 
 # Web 服务测试

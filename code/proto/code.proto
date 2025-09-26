@@ -24,9 +24,8 @@ message SendMessageResponse{
 
 message SendCodeRequest{
   string addr = 1; // 收件人位置
-  string code = 2; // 验证码
-  string subject = 3; // 验证码主题
-  string content = 4; // 验证码内容
+  string subject = 2; // 主题
+
 }
 
 message SendCodeResponse{

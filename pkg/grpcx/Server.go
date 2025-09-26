@@ -61,6 +61,7 @@ func (s *Server) Serve() error {
 
 // 注册服务
 func (s *Server) serverRegister(ctx context.Context) error {
+	return nil
 	config := &consul.Config{
 		Address: fmt.Sprintf("%s:%d", s.RemoteAddr, s.RemotePort),
 	}

@@ -1,31 +1,45 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"google.golang.org/grpc"
-	"net"
-	"shop/user/global"
-	"shop/user/handler"
-	"shop/user/proto"
-	service2 "shop/user/service"
+	"go.uber.org/zap"
+	"os"
+	"os/signal"
+	"shop/user/config"
+	"shop/user/ioc"
+	"shop/user/repository"
+	"shop/user/repository/dao"
+	"shop/user/server"
+	"shop/user/service"
+	"syscall"
 )
 
 func main() {
-	IP := flag.String("ip", "0.0.0.0", "ip address")
-	Port := flag.Int("port", 5005, "port number")
+	ioc.InitZap()
+	var err error
+	config.Cf, err = config.Load()
+	config.PrintConfig()
+	if err != nil {
+		zap.S().Error("获取配置文件失败", zap.Error(err))
+		return
+	}
 
-	flag.Parse()
-	fmt.Println("IP:", *IP, "Port:", *Port)
-	server := grpc.NewServer()
-	serviceV := service2.NewUserService(global.DB)
-	proto.RegisterUserServer(server, handler.NewUserServer(serviceV))
-	lis, err := net.Listen("tcp", fmt.Sprintf("%s:%d", *IP, *Port))
+	db := ioc.InitDB()
+	userDao := dao.NewGormUserDao(db)
+	repo := repository.NewGormUserRepository(userDao)
+	svc := service.NewUserService(repo)
+	svr := server.NewUserServer(svc)
+	s := ioc.InitGRPCxServer(svr)
+	go func() {
+		signalChan := make(chan os.Signal, 1)
+		signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+		<-signalChan
+		s.DeRegister()
+	}()
+	err = s.Serve()
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		panic("error")
 	}
-	err = server.Serve(lis)
-	if err != nil {
-		panic(err)
-	}
+
 }

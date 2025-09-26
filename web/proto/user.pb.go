@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.2
 // 	protoc        v5.29.3
-// source: user.proto
+// source: old_user.proto
 
 package proto
 
