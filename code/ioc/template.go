@@ -9,7 +9,7 @@ import (
 
 func InitYamlTemplateManager() *config.YamlTemplateManager {
 	v := viper.New()
-	v.SetConfigFile("./templates.yaml") // 直接指定路径
+	v.SetConfigFile("./code/config/templates.yaml") // 直接指定路径
 	if err := v.ReadInConfig(); err != nil {
 		zap.L().Panic("读取短信模版配置失败")
 	}
@@ -19,7 +19,7 @@ func InitYamlTemplateManager() *config.YamlTemplateManager {
 	}
 
 	v.OnConfigChange(func(e fsnotify.Event) {
-		v.SetConfigFile("./templates.yaml")
+		v.SetConfigFile("./code/config/templates.yaml")
 		if err := v.ReadInConfig(); err != nil {
 			zap.L().Panic("读取短信模版配置失败")
 		}

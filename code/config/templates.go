@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"go.uber.org/zap"
 	"strings"
 	"text/template"
 )
@@ -37,6 +38,7 @@ func (ym *YamlTemplateManager) GetAllTemplates() map[string]TemplateDetail {
 func (ym *YamlTemplateManager) RenderContent(templateID, code string) (string, error) {
 	templateDetail, err := ym.GetTemplate(templateID)
 	if err != nil {
+		zap.L().Error("Get template failed", zap.String("templateID", templateID), zap.Error(err))
 		return "", err
 	}
 	expireSeconds := templateDetail.ExpireSeconds

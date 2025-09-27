@@ -1,0 +1,25 @@
+app:
+  env: "development" # production/staging
+  grpc_port: 50052
+  shutdown_timeout: 30s
+
+redis:
+  host: "127.0.0.1"
+  port: 6379
+  password:
+  db: 0
+  pool_size: 20
+
+
+smtp:
+  from: 996948441@qq.com
+  from_alias: gstecp
+  host: "smtp.qq.com:465"
+  password: uaadriruhhrj
+  port: "465"
+
+consul:
+  remote_addr: 127.0.0.1
+  remote_port: 8500
+  name: code_service
+  mode:

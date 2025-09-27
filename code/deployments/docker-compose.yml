@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Redis 缓存服务
+  redis:
+    image: redis:7-alpine
+    container_name: user_redis
+    command: redis-server --requirepass redispass
+    volumes:
+      - redis_data:/data
+    networks:
+      - user_network
+    ports:
+      - "16379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  user_network:
+    driver: bridge
