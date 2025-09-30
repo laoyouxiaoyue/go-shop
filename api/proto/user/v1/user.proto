@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
-option go_package = ".;proto";
+option go_package = "user/.;userv1";
 // protoc -I . user.proto --go-grpc_out=.
 // protoc -I . user.proto --go_out=.
 service User{

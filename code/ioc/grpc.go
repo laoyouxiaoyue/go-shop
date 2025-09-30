@@ -10,12 +10,6 @@ import (
 func InitGRPCxServer(codeServer *server.CodeServer) *grpcx.Server {
 	newServer := grpc.NewServer()
 	codeServer.Register(newServer)
+	return grpcx.NewServer(newServer, config.Cf.Server.Host, config.Cf.Server.Port, config.Cf.Consul.Host, config.Cf.Consul.Port, config.Cf.Server.Name, config.Cf.Server.Tags, config.Cf.Server.Id)
 
-	return &grpcx.Server{
-		Server:     newServer,
-		Port:       config.Cf.App.GRPCPort,
-		Name:       config.Cf.Consul.Name,
-		RemoteAddr: config.Cf.Consul.RemoteAddr,
-		RemotePort: config.Cf.Consul.RemotePort,
-	}
 }

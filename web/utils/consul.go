@@ -64,6 +64,6 @@ func FilterService() {
 	//client.Agent().ServicesWithFilter()
 }
 func main() {
-	AllService()
-	//_ = Register("127.0.0.1", 8021, "test", []string{"123"}, "123")
+	//AllService()
+	_ = Register("127.0.0.1", 8021, "test", []string{"123"}, "123")
 }

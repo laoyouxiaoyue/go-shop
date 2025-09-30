@@ -5,8 +5,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	codev1 "shop/api/gen/code"
 	"shop/code/errs"
-	codev1 "shop/code/proto"
 	"shop/code/service"
 )
 

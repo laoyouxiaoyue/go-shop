@@ -163,3 +163,40 @@ func PassWordLogin(c *gin.Context) {
 		}
 	}
 }
+
+func Register(c *gin.Context) {
+	registerForm := forms.RegisterForm{}
+	if err := c.ShouldBind(&registerForm); err != nil {
+		utils.HandleValidatorError(c, err)
+		return
+	}
+	smsConn, err := grpc.Dial(fmt.Sprintf("127.0.0.1:50052"), grpc.WithInsecure())
+	if err != nil {
+		zap.S().Errorw("[SendSms] 连接错误", "err", err)
+		HandleGrpcErrorToHttp(err, c)
+		return
+	}
+	CodeSrvClient := proto.NewCodeServiceClient(smsConn)
+	rsp, err := CodeSrvClient.VerifyCode(context.Background(), &proto.VerifyCodeRequest{
+		Addr:    registerForm.Mobile,
+		Subject: registerForm.Subject,
+		Code:    registerForm.Code,
+	})
+	if !rsp.Success || err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"msg": "验证码错误",
+		})
+	}
+	userConn, err := grpc.Dial(fmt.Sprintf("%s:%s", global.ServerConfig.UserServer.Host, global.ServerConfig.UserServer.Port), grpc.WithInsecure())
+	if err != nil {
+		zap.S().Errorw("[PassWordLogin] 连接错误", "err", err)
+		HandleGrpcErrorToHttp(err, c)
+		return
+	}
+	UserSrvClient := proto.NewUserClient(userConn)
+	UserSrvClient.CreateUser(c, &proto.CreateUserInfo{
+		Mobile:   registerForm.Mobile,
+		PassWord: registerForm.PassWord,
+	})
+
+}

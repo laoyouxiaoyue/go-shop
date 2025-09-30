@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"shop/user/proto"
+	"shop/api/gen/user"
 	"shop/user/repository/model"
 )
 
@@ -37,8 +37,8 @@ func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
 		return db.Offset(offset).Limit(pageSize)
 	}
 }
-func ModelToResponse(user model.User) proto.UserInfoResponse {
-	userInfoRsp := proto.UserInfoResponse{
+func ModelToResponse(user model.User) userv1.UserInfoResponse {
+	userInfoRsp := userv1.UserInfoResponse{
 		Id:       user.ID,
 		Password: user.Password,
 		Mobile:   user.Mobile,

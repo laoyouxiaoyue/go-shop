@@ -1,7 +1,5 @@
 package config
 
-import "time"
-
 const (
 	Local int = iota
 	Remote
@@ -10,15 +8,19 @@ const (
 var Cf *Config
 
 type Config struct {
-	App    AppConfig    `mapstructure:"app"`
+	Server ServerConfig `mapstructure:"server"`
 	Redis  RedisConfig  `mapstructure:"redis"`
 	Consul ConsulConfig `mapstructure:"consul"`
 	Smtp   SmtpConfig   `mapstructure:"smtp"`
 }
-type AppConfig struct {
-	Env             string        `mapstructure:"env"`
-	GRPCPort        int           `mapstructure:"grpc_port"`
-	ShutdownTimeout time.Duration `mapstructure:"shutdown_timeout"`
+type ServerConfig struct {
+	Name          string   `mapstructure:"name"`
+	Host          string   `mapstructure:"host"`
+	Port          int      `mapstructure:"port"`
+	Tags          []string `mapstructure:"tags"`
+	Id            string   `mapstructure:"id"`
+	CheckInterval string   `mapstructure:"check_interval"`
+	CheckTimeout  string   `mapstructure:"check_timeout"`
 }
 
 type RedisConfig struct {
@@ -30,11 +32,12 @@ type RedisConfig struct {
 }
 
 type ConsulConfig struct {
-	mode       int    `mapstructure:"mode"`
-	RemoteAddr string `mapstructure:"remote_addr"`
-	RemotePort int    `mapstructure:"remote_port"`
-	Name       string `mapstructure:"name"`
+	Host       string `mapstructure:"host"`
 	Port       int    `mapstructure:"port"`
+	Scheme     string `mapstructure:"scheme"`
+	Token      string `mapstructure:"token"`
+	Datacenter string `mapstructure:"datacenter"`
+	WaitTime   string `mapstructure:"wait_time"`
 }
 
 type SmtpConfig struct {

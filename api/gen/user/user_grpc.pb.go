@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: old_user.proto
+// source: proto/user/v1/user.proto
 
-package proto
+package userv1
 
 import (
 	context "context"
@@ -32,8 +32,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// protoc -I . old_user.proto --go-grpc_out=.
-// protoc -I . old_user.proto --go_out=.
+// protoc -I . user.proto --go-grpc_out=.
+// protoc -I . user.proto --go_out=.
 type UserClient interface {
 	GetUserList(ctx context.Context, in *PageInfo, opts ...grpc.CallOption) (*UserListResponse, error)
 	GetUserByMobile(ctx context.Context, in *MobileRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
@@ -115,8 +115,8 @@ func (c *userClient) CheckPassword(ctx context.Context, in *PassWordCheckInfo, o
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility.
 //
-// protoc -I . old_user.proto --go-grpc_out=.
-// protoc -I . old_user.proto --go_out=.
+// protoc -I . user.proto --go-grpc_out=.
+// protoc -I . user.proto --go_out=.
 type UserServer interface {
 	GetUserList(context.Context, *PageInfo) (*UserListResponse, error)
 	GetUserByMobile(context.Context, *MobileRequest) (*UserInfoResponse, error)
@@ -314,5 +314,5 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "old_user.proto",
+	Metadata: "proto/user/v1/user.proto",
 }

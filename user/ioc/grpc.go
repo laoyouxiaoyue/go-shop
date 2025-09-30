@@ -12,9 +12,9 @@ func InitGRPCxServer(userServer *server.UserServer) *grpcx.Server {
 	userServer.Register(newServer)
 	return &grpcx.Server{
 		Server:     newServer,
-		Port:       config.Cf.App.GRPCPort,
-		Name:       config.Cf.Consul.Name,
-		RemoteAddr: config.Cf.Consul.RemoteAddr,
-		RemotePort: config.Cf.Consul.RemotePort,
+		Port:       config.Cf.Server.Port,
+		Name:       config.Cf.Server.Name,
+		RemoteAddr: config.Cf.Consul.Host,
+		RemotePort: config.Cf.Consul.Port,
 	}
 }

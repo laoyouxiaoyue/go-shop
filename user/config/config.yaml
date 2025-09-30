@@ -1,6 +1,6 @@
 app:
   env: "development" # production/staging
-  grpc_port: 50051
+  grpc_port: 50052
   shutdown_timeout: 30s
 
 mysql:
@@ -21,7 +21,20 @@ auth:
   issuer: "old_user-service"
 
 consul:
-  remote_addr: 127.0.0.1
-  remote_port: 8500
-  name: user_service
-  mode: 1
+  # 必需配置
+  host: "127.0.0.1"             # Consul 服务器地址
+  port: 8500                    # Consul HTTP API 端口
+  # 可选配置
+  scheme: "http"                # http 或 https
+  token: ""                     # ACL token（如有ACL保护）
+  datacenter: "dc1"             # 数据中心名称
+  wait_time: "30s"              # 阻塞查询超时时间
+
+server:
+  name: user-service          # 服务名称（在 Consul 中的注册名）
+  host: 127.0.0.1               # gRPC 服务监听地址
+  port: 50052                # gRPC 服务监听端口
+  tags: ["grpc", "user"]      # 可选：服务标签
+  check_interval: "10s"       # Consul 健康检查间隔
+  check_timeout: "5s"         # Consul 健康检查超时
+  id: "1"

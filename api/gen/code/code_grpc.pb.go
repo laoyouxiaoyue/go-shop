@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: code.proto
+// source: proto/code/v1/code.proto
 
-package proto
+package codev1
 
 import (
 	context "context"
@@ -239,5 +239,5 @@ var CodeService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "code.proto",
+	Metadata: "proto/code/v1/code.proto",
 }

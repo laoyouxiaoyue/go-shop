@@ -29,9 +29,7 @@ func (c *ConfigLoaderViper) Load() (*Config, error) {
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("Config file changed:", e.Name)
 	})
-	if cfg.Consul.mode == Remote {
 
-	}
 	return &cfg, nil
 }
 
@@ -52,8 +50,6 @@ func Load() (*Config, error) {
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("Config file changed:", e.Name)
 	})
-	if cfg.Consul.mode == Remote {
 
-	}
 	return &cfg, nil
 }
