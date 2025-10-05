@@ -18,12 +18,11 @@ func main() {
 	ioc.InitZap()
 	var err error
 	config.Cf, err = config.Load()
-	config.PrintConfig()
 	if err != nil {
 		zap.S().Error("获取配置文件失败", zap.Error(err))
 		return
 	}
-
+	ioc.InitNacos()
 	db := ioc.InitDB()
 	userDao := dao.NewGormUserDao(db)
 	repo := repository.NewGormUserRepository(userDao)

@@ -19,6 +19,7 @@ func main() {
 	ioc.InitZap()
 	var err error
 	config.Cf, err = config.Load()
+	ioc.InitNacos()
 	if err != nil {
 		zap.L().Panic("配置文件获取失败", zap.Error(err))
 	}

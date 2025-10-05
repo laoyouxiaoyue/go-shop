@@ -6,3 +6,13 @@ user_server:
 
 jwt:
   key: '996948441'
+
+
+nacos:
+  host: '127.0.0.1'
+  port: 8848
+  namespace: '65424d7a-f310-4aa8-b2a1-e14095f73442'
+  user: 'nacos'
+  password: 'nacos'
+  dataid: 'config.json'
+  group: 'dev'

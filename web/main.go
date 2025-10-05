@@ -17,6 +17,7 @@ import (
 func main() {
 	initialize.InitLogger()
 	initialize.InitConfig()
+	initialize.InitNacos()
 	err := initialize.InitTrans("zh")
 
 	//// 自定义验证器

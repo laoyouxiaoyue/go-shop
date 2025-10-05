@@ -10,12 +10,13 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"net/http"
+	codev1 "shop/api/gen/code"
+	"shop/api/gen/user"
 	"shop/web/forms"
 	"shop/web/global"
 	"shop/web/global/reponse"
 	"shop/web/middlewares"
 	"shop/web/models"
-	"shop/web/proto"
 	"shop/web/utils"
 	"strconv"
 	"time"
@@ -54,13 +55,13 @@ func GetUserList(ctx *gin.Context) {
 	if err != nil {
 		zap.S().Errorw("[GetUserList] 连接错误", "err", err)
 	}
-	UserSrvClient := proto.NewUserClient(userConn)
+	UserSrvClient := userv1.NewUserClient(userConn)
 
 	pn := ctx.DefaultQuery("pn", "0")
 	pnInt, _ := strconv.Atoi(pn)
 	pSize := ctx.DefaultQuery("psize", "0")
 	pSizeInt, _ := strconv.Atoi(pSize)
-	rsp, err := UserSrvClient.GetUserList(context.Background(), &proto.PageInfo{
+	rsp, err := UserSrvClient.GetUserList(context.Background(), &userv1.PageInfo{
 		Pn:    uint32(pnInt),
 		PSize: uint32(pSizeInt),
 	})
@@ -103,9 +104,9 @@ func PassWordLogin(c *gin.Context) {
 	if err != nil {
 		zap.S().Errorw("[PassWordLogin] 连接错误", "err", err)
 	}
-	UserSrvClient := proto.NewUserClient(userConn)
+	UserSrvClient := userv1.NewUserClient(userConn)
 
-	if rsp, err := UserSrvClient.GetUserByMobile(context.Background(), &proto.MobileRequest{
+	if rsp, err := UserSrvClient.GetUserByMobile(context.Background(), &userv1.MobileRequest{
 		Mobile: passwordLoginForm.Mobile,
 	}); err != nil {
 		zap.S().Errorf("%v", err)
@@ -125,7 +126,7 @@ func PassWordLogin(c *gin.Context) {
 		}
 	} else {
 
-		if passRsp, pasErr := UserSrvClient.CheckPassword(context.Background(), &proto.PassWordCheckInfo{
+		if passRsp, pasErr := UserSrvClient.CheckPassword(context.Background(), &userv1.PassWordCheckInfo{
 			Password:          passwordLoginForm.PassWord,
 			EncryptedPassword: rsp.Password,
 		}); pasErr != nil {
@@ -176,8 +177,8 @@ func Register(c *gin.Context) {
 		HandleGrpcErrorToHttp(err, c)
 		return
 	}
-	CodeSrvClient := proto.NewCodeServiceClient(smsConn)
-	rsp, err := CodeSrvClient.VerifyCode(context.Background(), &proto.VerifyCodeRequest{
+	CodeSrvClient := codev1.NewCodeServiceClient(smsConn)
+	rsp, err := CodeSrvClient.VerifyCode(context.Background(), &codev1.VerifyCodeRequest{
 		Addr:    registerForm.Mobile,
 		Subject: registerForm.Subject,
 		Code:    registerForm.Code,
@@ -193,8 +194,8 @@ func Register(c *gin.Context) {
 		HandleGrpcErrorToHttp(err, c)
 		return
 	}
-	UserSrvClient := proto.NewUserClient(userConn)
-	UserSrvClient.CreateUser(c, &proto.CreateUserInfo{
+	UserSrvClient := userv1.NewUserClient(userConn)
+	UserSrvClient.CreateUser(c, &userv1.CreateUserInfo{
 		Mobile:   registerForm.Mobile,
 		PassWord: registerForm.PassWord,
 	})

@@ -10,6 +10,14 @@ redis:
   db: 0
   pool_size: 20
 
+nacos:
+  host: '127.0.0.1'
+  port: 8848
+  namespace: '11a9eee7-3d68-430c-bf38-525fdfbf27dc'
+  user: 'nacos'
+  password: 'nacos'
+  dataid: 'config.json'
+  group: 'dev'
 
 smtp:
   from: 996948441@qq.com

@@ -12,109 +12,64 @@ const (
 var Cf *Config
 
 type Config struct {
-	Server ServerConfig `mapstructure:"server"`
-	Mysql  MysqlConfig  `mapstructure:"mysql"`
-	Redis  RedisConfig  `mapstructure:"redis"`
-	Auth   AuthConfig   `mapstructure:"auth"`
-	Consul ConsulConfig `mapstructure:"consul"`
+	Server      ServerConfig `mapstructure:"server" json:"server"`
+	Mysql       MysqlConfig  `mapstructure:"mysql" json:"mysql"`
+	Redis       RedisConfig  `mapstructure:"redis" json:"redis"`
+	Auth        AuthConfig   `mapstructure:"auth" json:"auth"`
+	Consul      ConsulConfig `mapstructure:"consul" json:"consul"`
+	NacosConfig NacosConfig  `mapstructure:"nacos" json:"nacos"`
 }
 
 type AppConfig struct {
-	Env             string        `mapstructure:"env"`
-	GRPCPort        int           `mapstructure:"grpc_port"`
-	ShutdownTimeout time.Duration `mapstructure:"shutdown_timeout"`
+	Env             string        `mapstructure:"env" json:"env"`
+	GRPCPort        int           `mapstructure:"grpc_port" json:"grpc_port"`
+	ShutdownTimeout time.Duration `mapstructure:"shutdown_timeout" json:"shutdown_timeout"`
 }
 
 type MysqlConfig struct {
-	Dsn string `mapstructure:"dsn"`
+	Dsn string `mapstructure:"dsn" json:"dsn"`
 }
 
 type RedisConfig struct {
-	Host     string `mapstructure:"host"`
-	Port     int    `mapstructure:"port"`
-	Password string `mapstructure:"password"`
-	DB       int    `mapstructure:"db"`
-	PoolSize int    `mapstructure:"pool_size"`
+	Host     string `mapstructure:"host" json:"host"`
+	Port     int    `mapstructure:"port" json:"port"`
+	Password string `mapstructure:"password" json:"password"`
+	DB       int    `mapstructure:"db" json:"db"`
+	PoolSize int    `mapstructure:"pool_size" json:"pool_size"`
 }
 
 type AuthConfig struct {
-	JwtSecret          string `mapstructure:"jwt_secret"`
-	AccessTokenExpire  string `mapstructure:"access_token_expire"`
-	RefreshTokenExpire string `mapstructure:"refresh_token_expire"`
-	Issuer             string `mapstructure:"issuer"`
+	JwtSecret          string `mapstructure:"jwt_secret" json:"jwt_secret"`
+	AccessTokenExpire  string `mapstructure:"access_token_expire" json:"access_token_expire"`
+	RefreshTokenExpire string `mapstructure:"refresh_token_expire" json:"refresh_token_expire"`
+	Issuer             string `mapstructure:"issuer" json:"issuer"`
 }
 
 type ServerConfig struct {
-	Name          string   `mapstructure:"name"`
-	Host          string   `mapstructure:"host"`
-	Port          int      `mapstructure:"port"`
-	Tags          []string `mapstructure:"tags"`
-	Id            string   `mapstructure:"id"`
-	CheckInterval string   `mapstructure:"check_interval"`
-	CheckTimeout  string   `mapstructure:"check_timeout"`
+	Name          string   `mapstructure:"name" json:"name"`
+	Host          string   `mapstructure:"host" json:"host"`
+	Port          int      `mapstructure:"port" json:"port"`
+	Tags          []string `mapstructure:"tags" json:"tags"`
+	Id            string   `mapstructure:"id" json:"id"`
+	CheckInterval string   `mapstructure:"check_interval" json:"check_interval"`
+	CheckTimeout  string   `mapstructure:"check_timeout" json:"check_timeout"`
+}
+
+type NacosConfig struct {
+	Host      string `mapstructure:"host" json:"host"`
+	Port      int    `mapstructure:"port" json:"port"`
+	Namespace string `mapstructure:"namespace" json:"namespace"`
+	User      string `mapstructure:"user" json:"user"`
+	Password  string `mapstructure:"password" json:"password"`
+	DataID    string `mapstructure:"dataid" json:"dataid"`
+	Group     string `mapstructure:"group" json:"group"`
 }
 
 type ConsulConfig struct {
-	Host       string `mapstructure:"host"`
-	Port       int    `mapstructure:"port"`
-	Scheme     string `mapstructure:"scheme"`
-	Token      string `mapstructure:"token"`
-	Datacenter string `mapstructure:"datacenter"`
-	WaitTime   string `mapstructure:"wait_time"`
-}
-
-func PrintConfig() {
-	//if Cf == nil {
-	//	zap.S().Warn("配置未初始化")
-	//	return
-	//}
-	//
-	//zap.S().Info("=== 应用配置信息 ===")
-	//
-	////应用配置
-	////zap.S().Infow("应用配置",
-	////	"env", Cf.App.Env,
-	////	"grpc_port", Cf.App.GRPCPort,
-	////	"shutdown_timeout", Cf.App.ShutdownTimeout,
-	////)
-	//
-	//// MySQL 配置（敏感信息脱敏）
-	//mysqlDSN := Cf.Mysql.Dsn
-	//if len(mysqlDSN) > 20 { // 简单脱敏，只显示部分信息
-	//	mysqlDSN = mysqlDSN[:20] + "..."
-	//}
-	//zap.S().Infow("MySQL配置",
-	//	"dsn_length", len(Cf.Mysql.Dsn),
-	//	"dsn_preview", mysqlDSN,
-	//)
-	//
-	//// Redis 配置
-	//zap.S().Infow("Redis配置",
-	//	"host", Cf.Redis.Host,
-	//	"port", Cf.Redis.Port,
-	//	"password_set", Cf.Redis.Password != "",
-	//	"db", Cf.Redis.DB,
-	//	"pool_size", Cf.Redis.PoolSize,
-	//)
-	//
-	//// 认证配置（敏感信息脱敏）
-	//jwtSecret := Cf.Auth.JwtSecret
-	//if len(jwtSecret) > 5 {
-	//	jwtSecret = jwtSecret[:5] + "..."
-	//}
-	//zap.S().Infow("认证配置",
-	//	"jwt_secret_length", len(Cf.Auth.JwtSecret),
-	//	"jwt_secret_preview", jwtSecret,
-	//	"access_token_expire", Cf.Auth.AccessTokenExpire,
-	//	"refresh_token_expire", Cf.Auth.RefreshTokenExpire,
-	//	"issuer", Cf.Auth.Issuer,
-	//)
-	//
-	//// Consul 配置
-	//zap.S().Infow("Consul配置",
-	//	"remote_addr", Cf.Consul.RemoteAddr,
-	//	"remote_port", Cf.Consul.RemotePort,
-	//	"name", Cf.Consul.Name,
-	//	"port", Cf.Consul.Port,
-	//)
+	Host       string `mapstructure:"host" json:"host"`
+	Port       int    `mapstructure:"port" json:"port"`
+	Scheme     string `mapstructure:"scheme" json:"scheme"`
+	Token      string `mapstructure:"token" json:"token"`
+	Datacenter string `mapstructure:"datacenter" json:"datacenter"`
+	WaitTime   string `mapstructure:"wait_time" json:"wait_time"`
 }

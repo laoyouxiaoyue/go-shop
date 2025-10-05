@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"shop/code/proto"
+	"shop/api/gen/code"
 	"shop/web/forms"
 	"shop/web/utils"
 )
@@ -21,8 +21,8 @@ func SendSms(c *gin.Context) {
 	if err != nil {
 		zap.S().Errorw("[SendSms] 连接错误", "err", err)
 	}
-	UserSrvClient := proto.NewCodeServiceClient(smsConn)
-	rsp, err := UserSrvClient.SendCode(context.Background(), &proto.SendCodeRequest{
+	UserSrvClient := codev1.NewCodeServiceClient(smsConn)
+	rsp, err := UserSrvClient.SendCode(context.Background(), &codev1.SendCodeRequest{
 		Addr:    sendSmsForm.Mobile,
 		Subject: sendSmsForm.Subject,
 	})
