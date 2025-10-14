@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "Shop Goods API Tests",
+    "description": "电商商品管理API测试集合",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8021"
+    },
+    {
+      "key": "jwt_token",
+      "value": "your_jwt_token_here"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. 获取商品列表",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/v1/goods/list?pages=1&pagePerNums=10",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "list"],
+          "query": [
+            {
+              "key": "pages",
+              "value": "1"
+            },
+            {
+              "key": "pagePerNums",
+              "value": "10"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. 创建商品",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"测试商品\",\n  \"goodsSn\": \"TEST001\",\n  \"stocks\": 100,\n  \"marketPrice\": 1000.00,\n  \"shopPrice\": 800.00,\n  \"goodsBrief\": \"测试商品简介\",\n  \"goodsDesc\": \"测试商品详细描述\",\n  \"shipFree\": true,\n  \"images\": [\"test1.jpg\"],\n  \"goodsFrontImage\": \"front.jpg\",\n  \"isNew\": true,\n  \"isHot\": false,\n  \"onSale\": true,\n  \"categoryId\": 1,\n  \"brandId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/goods",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods"]
+        }
+      }
+    },
+    {
+      "name": "3. 获取商品详情",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/v1/goods/detail/1",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "detail", "1"]
+        }
+      }
+    },
+    {
+      "name": "4. 更新商品",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"更新后的测试商品\",\n  \"goodsSn\": \"TEST001_UPDATED\",\n  \"stocks\": 50,\n  \"marketPrice\": 1200.00,\n  \"shopPrice\": 900.00,\n  \"goodsBrief\": \"更新后的商品简介\",\n  \"goodsDesc\": \"更新后的商品详细描述\",\n  \"shipFree\": true,\n  \"images\": [\"test1.jpg\", \"test2.jpg\"],\n  \"goodsFrontImage\": \"front_updated.jpg\",\n  \"isNew\": false,\n  \"isHot\": true,\n  \"onSale\": true,\n  \"categoryId\": 1,\n  \"brandId\": 1\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/goods/1",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "1"]
+        }
+      }
+    },
+    {
+      "name": "5. 获取分类列表",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/v1/goods/categories",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "categories"]
+        }
+      }
+    },
+    {
+      "name": "6. 创建分类",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"电子产品\",\n  \"parentCategory\": 0,\n  \"level\": 1,\n  \"isTab\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/goods/categories",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "categories"]
+        }
+      }
+    },
+    {
+      "name": "7. 获取品牌列表",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/v1/goods/brands",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "brands"]
+        }
+      }
+    },
+    {
+      "name": "8. 创建品牌",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"测试品牌\",\n  \"logo\": \"https://example.com/logo.png\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/goods/brands",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "brands"]
+        }
+      }
+    },
+    {
+      "name": "9. 获取轮播图列表",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/v1/goods/banners",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "banners"]
+        }
+      }
+    },
+    {
+      "name": "10. 创建轮播图",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "x-token",
+            "value": "{{jwt_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"index\": 1,\n  \"image\": \"https://example.com/banner.jpg\",\n  \"url\": \"https://shop.example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/v1/goods/banners",
+          "host": ["{{base_url}}"],
+          "path": ["v1", "goods", "banners"]
+        }
+      }
+    }
+  ]
+}

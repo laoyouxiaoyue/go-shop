@@ -23,7 +23,7 @@ smtp:
   from: 996948441@qq.com
   from_alias: gstecp
   host: "smtp.qq.com:465"
-  password: uaadriruhhrjb
+  password: uaadriruhhrj
   port: "465"
 
 consul:

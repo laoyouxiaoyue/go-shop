@@ -1,0 +1,752 @@
+{
+  "info": {
+    "name": "Shop Goods API Tests",
+    "description": "电商商品管理API完整测试集合",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "商品管理",
+      "item": [
+        {
+          "name": "获取商品列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}",
+                "description": "JWT认证令牌"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/list?pages=1&pagePerNums=10&isHot=true",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "list"],
+              "query": [
+                {
+                  "key": "pages",
+                  "value": "1",
+                  "description": "页码"
+                },
+                {
+                  "key": "pagePerNums",
+                  "value": "10",
+                  "description": "每页数量"
+                },
+                {
+                  "key": "isHot",
+                  "value": "true",
+                  "description": "是否热门"
+                },
+                {
+                  "key": "priceMin",
+                  "value": "100",
+                  "description": "最低价格",
+                  "disabled": true
+                },
+                {
+                  "key": "priceMax",
+                  "value": "5000",
+                  "description": "最高价格",
+                  "disabled": true
+                },
+                {
+                  "key": "brand",
+                  "value": "1",
+                  "description": "品牌ID",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "批量获取商品",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [1, 2, 3, 4, 5]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/batch",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "batch"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取商品详情",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/detail/{{goods_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "detail", "{{goods_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "创建商品",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro Max\",\n  \"goodsSn\": \"IPHONE15PM_001\",\n  \"stocks\": 100,\n  \"marketPrice\": 9999.00,\n  \"shopPrice\": 8999.00,\n  \"goodsBrief\": \"最新款iPhone 15 Pro Max，搭载A17 Pro芯片\",\n  \"goodsDesc\": \"详细商品描述：iPhone 15 Pro Max采用钛金属设计，配备6.7英寸超视网膜XDR显示屏，搭载A17 Pro芯片，支持Action Button和USB-C接口。\",\n  \"shipFree\": true,\n  \"images\": [\"iphone15pm_1.jpg\", \"iphone15pm_2.jpg\", \"iphone15pm_3.jpg\"],\n  \"descImages\": [\"iphone15pm_desc_1.jpg\", \"iphone15pm_desc_2.jpg\"],\n  \"goodsFrontImage\": \"iphone15pm_front.jpg\",\n  \"isNew\": true,\n  \"isHot\": true,\n  \"onSale\": true,\n  \"categoryId\": 1,\n  \"brandId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "更新商品",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro Max 256GB\",\n  \"goodsSn\": \"IPHONE15PM_256GB_001\",\n  \"stocks\": 50,\n  \"marketPrice\": 10999.00,\n  \"shopPrice\": 9999.00,\n  \"goodsBrief\": \"iPhone 15 Pro Max 256GB版本\",\n  \"goodsDesc\": \"更新后的商品描述\",\n  \"shipFree\": true,\n  \"images\": [\"iphone15pm_256gb_1.jpg\", \"iphone15pm_256gb_2.jpg\"],\n  \"descImages\": [\"iphone15pm_256gb_desc_1.jpg\"],\n  \"goodsFrontImage\": \"iphone15pm_256gb_front.jpg\",\n  \"isNew\": true,\n  \"isHot\": true,\n  \"onSale\": true,\n  \"categoryId\": 1,\n  \"brandId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/{{goods_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "{{goods_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除商品",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/{{goods_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "{{goods_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "分类管理",
+      "item": [
+        {
+          "name": "获取所有分类",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/categories",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "获取子分类",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/subcategories?id=1&level=2",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "subcategories"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "分类ID"
+                },
+                {
+                  "key": "level",
+                  "value": "2",
+                  "description": "分类级别"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "创建分类",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"智能手机\",\n  \"parentCategory\": 1,\n  \"level\": 2,\n  \"isTab\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/categories",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "更新分类",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"智能手机和配件\",\n  \"parentCategory\": 1,\n  \"level\": 2,\n  \"isTab\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/categories/{{category_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "categories", "{{category_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除分类",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/categories/{{category_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "categories", "{{category_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "品牌管理",
+      "item": [
+        {
+          "name": "获取品牌列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/brands?pages=1&pagePerNums=20",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "brands"],
+              "query": [
+                {
+                  "key": "pages",
+                  "value": "1",
+                  "description": "页码"
+                },
+                {
+                  "key": "pagePerNums",
+                  "value": "20",
+                  "description": "每页数量"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "创建品牌",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple\",\n  \"logo\": \"https://example.com/logos/apple_logo.png\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/brands",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "brands"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "更新品牌",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apple Inc.\",\n  \"logo\": \"https://example.com/logos/apple_inc_logo.png\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/brands/{{brand_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "brands", "{{brand_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除品牌",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/brands/{{brand_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "brands", "{{brand_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "轮播图管理",
+      "item": [
+        {
+          "name": "获取轮播图列表",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/banners",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "banners"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "创建轮播图",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"index\": 1,\n  \"image\": \"https://example.com/banners/iphone15_banner.jpg\",\n  \"url\": \"https://shop.example.com/goods/iphone15\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/banners",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "banners"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "更新轮播图",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"index\": 2,\n  \"image\": \"https://example.com/banners/iphone15_pro_banner.jpg\",\n  \"url\": \"https://shop.example.com/goods/iphone15-pro\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/banners/{{banner_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "banners", "{{banner_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除轮播图",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/banners/{{banner_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "banners", "{{banner_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "分类品牌关联管理",
+      "item": [
+        {
+          "name": "根据分类获取品牌",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/category/{{category_id}}/brands",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "category", "{{category_id}}", "brands"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "创建分类品牌关联",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 1,\n  \"brandId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/category-brand",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "category-brand"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "更新分类品牌关联",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": 2,\n  \"brandId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods/category-brand/{{category_brand_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "category-brand", "{{category_brand_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "删除分类品牌关联",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/category-brand/{{category_brand_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "category-brand", "{{category_brand_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "错误处理测试",
+      "item": [
+        {
+          "name": "无效参数测试",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"goodsSn\": \"\",\n  \"stocks\": -1,\n  \"marketPrice\": -100,\n  \"shopPrice\": -50\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/goods",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "资源不存在测试",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-token",
+                "value": "{{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/detail/99999",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "detail", "99999"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "未授权访问测试",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/goods/list",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "goods", "list"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8021",
+      "description": "API基础URL"
+    },
+    {
+      "key": "jwt_token",
+      "value": "your_jwt_token_here",
+      "description": "JWT认证令牌，请先登录获取"
+    },
+    {
+      "key": "goods_id",
+      "value": "1",
+      "description": "商品ID，从创建商品接口获取"
+    },
+    {
+      "key": "category_id",
+      "value": "1",
+      "description": "分类ID，从获取分类接口获取"
+    },
+    {
+      "key": "brand_id",
+      "value": "1",
+      "description": "品牌ID，从获取品牌接口获取"
+    },
+    {
+      "key": "banner_id",
+      "value": "1",
+      "description": "轮播图ID，从获取轮播图接口获取"
+    },
+    {
+      "key": "category_brand_id",
+      "value": "1",
+      "description": "分类品牌关联ID，从创建关联接口获取"
+    }
+  ]
+}

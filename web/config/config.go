@@ -5,6 +5,11 @@ type UserServerConfig struct {
 	Port string `mapstructure:"port" json:"port"`
 }
 
+type GoodsServerConfig struct {
+	Host string `mapstructure:"host" json:"host"`
+	Port string `mapstructure:"port" json:"port"`
+}
+
 type JWTConfig struct {
 	SigningKey string `mapstructure:"key" json:"key"`
 }
@@ -20,9 +25,10 @@ type NacosConfig struct {
 }
 
 type ServerConfig struct {
-	Name        string           `mapstructure:"name" json:"name"`
-	Port        string           `mapstructure:"port" json:"port"`
-	UserServer  UserServerConfig `mapstructure:"user_server" json:"user_server"`
-	Jwt         JWTConfig        `mapstructure:"jwt" json:"jwt"`
-	NacosConfig NacosConfig      `mapstructure:"nacos" json:"nacos"`
+	Name        string            `mapstructure:"name" json:"name"`
+	Port        string            `mapstructure:"port" json:"port"`
+	UserServer  UserServerConfig  `mapstructure:"user_server" json:"user_server"`
+	GoodsServer GoodsServerConfig `mapstructure:"goods_server" json:"goods_server"`
+	Jwt         JWTConfig         `mapstructure:"jwt" json:"jwt"`
+	NacosConfig NacosConfig       `mapstructure:"nacos" json:"nacos"`
 }
