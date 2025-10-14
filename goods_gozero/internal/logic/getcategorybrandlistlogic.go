@@ -25,7 +25,39 @@ func NewGetCategoryBrandListLogic(ctx context.Context, svcCtx *svc.ServiceContex
 
 // 通过category获取brands
 func (l *GetCategoryBrandListLogic) GetCategoryBrandList(in *goods.CategoryInfoRequest) (*goods.BrandListResponse, error) {
-	// todo: add your logic here and delete this line
+	return nil, nil
 
-	return &goods.BrandListResponse{}, nil
+	//var categoryBrands []model.GoodsCategoryBrand
+	//var categoryBrandListResponse goods.CategoryBrandListResponse
+	//
+	//result := l.svcCtx.DB.Find(&categoryBrands)
+	//if result.Error != nil {
+	//	return nil, result.Error
+	//}
+	//categoryBrandListResponse.Total = int32(result.RowsAffected)
+	//
+	////分页
+	//l.svcCtx.DB.Preload("Category").Preload("Brands").Scopes(Paginate(int(req.Pages), int(req.PagePerNums))).Find(&categoryBrands)
+	//
+	//var CategoryBrandResponse []*goods.CategoryBrandResponse
+	//for _, categoryBrand := range categoryBrands {
+	//	CategoryBrandResponse = append(CategoryBrandResponse, &goods.CategoryBrandResponse{
+	//		Id: categoryBrand.CategoryID,
+	//		Brand: &goods.BrandInfoResponse{
+	//			Id:   categoryBrand.Brands.ID,
+	//			Name: categoryBrand.Brands.Name,
+	//			Logo: categoryBrand.Brands.Logo,
+	//		},
+	//		Category: &goods.CategoryInfoResponse{
+	//			Id:             categoryBrand.Category.ID,
+	//			Name:           categoryBrand.Category.Name,
+	//			Level:          categoryBrand.Category.Level,
+	//			IsTab:          categoryBrand.Category.IsTab,
+	//			ParentCategory: categoryBrand.Category.ParentCategoryID,
+	//		},
+	//	})
+	//}
+	//categoryBrandListResponse.Data = CategoryBrandResponse
+	//
+	//return &categoryBrandListResponse, nil
 }

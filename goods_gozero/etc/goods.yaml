@@ -1,12 +1,12 @@
 Name: goods.rpc
-ListenOn: 0.0.0.0:50053
+ListenOn: 127.0.0.1:50053
 #Etcd:
 #  Hosts:
 #  - 127.0.0.1:2379
 #  Key: goods.rpc
 
 Mysql:
-  Dsn: "test"
+  Dsn: "root:root@tcp(127.0.0.1:3306)/goods?charset=utf8mb4&parseTime=True&loc=Local"
 
 NacosConfig:
   Host: '127.0.0.1'

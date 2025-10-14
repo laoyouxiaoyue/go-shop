@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"shop/goods_gozero/internal/model"
 
 	"shop/goods_gozero/goods"
 	"shop/goods_gozero/internal/svc"
@@ -24,7 +27,9 @@ func NewDeleteCategoryBrandLogic(ctx context.Context, svcCtx *svc.ServiceContext
 }
 
 func (l *DeleteCategoryBrandLogic) DeleteCategoryBrand(in *goods.CategoryBrandRequest) (*goods.Empty, error) {
-	// todo: add your logic here and delete this line
+	if result := l.svcCtx.DB.Delete(&model.GoodsCategoryBrand{}, in.Id); result.RowsAffected == 0 {
+		return nil, status.Errorf(codes.NotFound, "品牌分类不存在")
+	}
 
 	return &goods.Empty{}, nil
 }

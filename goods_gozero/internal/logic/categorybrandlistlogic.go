@@ -28,4 +28,5 @@ func (l *CategoryBrandListLogic) CategoryBrandList(in *goods.CategoryBrandFilter
 	// todo: add your logic here and delete this line
 
 	return &goods.CategoryBrandListResponse{}, nil
+
 }

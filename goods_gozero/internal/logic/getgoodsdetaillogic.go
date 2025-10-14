@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"shop/goods_gozero/internal/model"
 
 	"shop/goods_gozero/goods"
 	"shop/goods_gozero/internal/svc"
@@ -24,7 +27,13 @@ func NewGetGoodsDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 }
 
 func (l *GetGoodsDetailLogic) GetGoodsDetail(in *goods.GoodInfoRequest) (*goods.GoodsInfoResponse, error) {
-	// todo: add your logic here and delete this line
+	var good model.Goods
 
-	return &goods.GoodsInfoResponse{}, nil
+	//多表关联查询需要进行Preload预加载
+	if result := l.svcCtx.DB.Preload("Category").Preload("Brands").First(&good, in.Id); result.RowsAffected == 0 {
+		return nil, status.Errorf(codes.NotFound, "商品不存在")
+	}
+
+	GoodsInfoRes := ModelToResponse(&good)
+	return &GoodsInfoRes, nil
 }
