@@ -1,0 +1,14 @@
+package ioc
+
+import (
+    "github.com/go-redsync/redsync/v4"
+    goredislib "github.com/redis/go-redis/v9"
+    "github.com/go-redsync/redsync/v4/redis/goredis/v9"
+)
+
+func InitRedsync(client *goredislib.Client) *redsync.Redsync {
+    pool := goredis.NewPool(client)
+    return redsync.New(pool)
+}
+
+
