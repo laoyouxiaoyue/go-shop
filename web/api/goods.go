@@ -10,15 +10,21 @@ import (
 	"shop/web/forms"
 	"shop/web/utils"
 	"strconv"
+	"time"
 )
 
 // 创建goods gRPC客户端连接
 func createGoodsClient() (goodsclient.Goods, error) {
-	clientConf := zrpc.RpcClientConf{}
-	//	clientConf.Target = fmt.Sprintf("dns:///%s:%s", global.ServerConfig.GoodsServer.Host, global.ServerConfig.GoodsServer.Port)
-	clientConf.Target = "dns:///127.0.0.1:50053"
-	conn := zrpc.MustNewClient(clientConf)
-	return goodsclient.NewGoods(conn), nil
+	addr, err := utils.DiscoverAddr("goods")
+	if err != nil {
+		return nil, err
+	}
+	cli := zrpc.MustNewClient(zrpc.RpcClientConf{
+		Endpoints: []string{addr},
+		NonBlock:  true,
+		Timeout:   int64(time.Second * 3),
+	})
+	return goodsclient.NewGoods(cli), nil
 }
 
 // 商品列表

@@ -24,6 +24,15 @@ type NacosConfig struct {
 	Group     string `mapstructure:"group" json:"group"`
 }
 
+type ConsulConfig struct {
+	Host       string `mapstructure:"host" json:"host"`
+	Port       int    `mapstructure:"port" json:"port"`
+	Scheme     string `mapstructure:"scheme" json:"scheme"`
+	Token      string `mapstructure:"token" json:"token"`
+	Datacenter string `mapstructure:"datacenter" json:"datacenter"`
+	WaitTime   string `mapstructure:"wait_time" json:"wait_time"`
+}
+
 type ServerConfig struct {
 	Name        string            `mapstructure:"name" json:"name"`
 	Port        string            `mapstructure:"port" json:"port"`
@@ -31,4 +40,5 @@ type ServerConfig struct {
 	GoodsServer GoodsServerConfig `mapstructure:"goods_server" json:"goods_server"`
 	Jwt         JWTConfig         `mapstructure:"jwt" json:"jwt"`
 	NacosConfig NacosConfig       `mapstructure:"nacos" json:"nacos"`
+	Consul      ConsulConfig      `mapstructure:"consul" json:"consul"`
 }

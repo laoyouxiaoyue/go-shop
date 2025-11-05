@@ -1,12 +1,8 @@
-Name: goods.rpc
-ListenOn: 127.0.0.1:50054
-#Etcd:
-#  Hosts:
-#  - 127.0.0.1:2379
-#  Key: goods.rpc
+Name: order.rpc
+ListenOn: 0.0.0.0:50055
 
 Mysql:
-  Dsn: "root:root@tcp(127.0.0.1:3306)/goods?charset=utf8mb4&parseTime=True&loc=Local"
+  Dsn: "root:root@tcp(127.0.0.1:3306)/order?charset=utf8mb4&parseTime=True&loc=Local"
 
 RedisConfig:
   Host: "127.0.0.1"
@@ -18,7 +14,7 @@ RedisConfig:
 NacosConfig:
   Host: '127.0.0.1'
   Port: 8848
-  Namespace: 'bcfbe4d5-6e04-4c47-abae-c051803049a6'
+  Namespace: 'namespace-id'
   User: 'nacos'
   Password: 'nacos'
   Dataid: 'config.json'
@@ -35,10 +31,14 @@ ConsulConfig:
   Wait_time: "30s"              # 阻塞查询超时时间
 
 ServerConfig:
-  Name:  "inventory"         # 服务名称（在 Consul 中的注册名）
+  Name:  "order"         # 服务名称（在 Consul 中的注册名）
   Host: 127.0.0.1               # gRPC 服务监听地址
-  Port: 50054              # gRPC 服务监听端口
-  Tags: ["grpc", "inventory"]      # 可选：服务标签
+  Port: 50055               # gRPC 服务监听端口
+  Tags: ["grpc", "order"]      # 可选：服务标签
   Check_interval: "10s"       # Consul 健康检查间隔
   Check_timeout: "5s"         # Consul 健康检查超时
-  Id: "inventory-127.0.0.1-50054"
+  Id: "order-127.0.0.1-50055"
+
+# 下游服务名（Consul 注册名）
+goods_service_name: "goods"
+inventory_service_name: "inventory"

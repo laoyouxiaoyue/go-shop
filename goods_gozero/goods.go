@@ -11,6 +11,7 @@ import (
 	"shop/goods_gozero/goods"
 	"shop/goods_gozero/internal/config"
 	"shop/goods_gozero/internal/ioc"
+	ioc2 "shop/goods_gozero/internal/ioc"
 	"shop/goods_gozero/internal/server"
 	"shop/goods_gozero/internal/svc"
 )
@@ -34,7 +35,7 @@ func main() {
 		}
 	})
 	defer s.Stop()
-	ioc.ServerRegister(&c)
+	ioc2.ServerRegister(&c)
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
 

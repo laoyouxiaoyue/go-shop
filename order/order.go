@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"shop/inventory/internal/ioc"
+	"shop/order/internal/ioc"
 
-	"shop/inventory/internal/config"
-	"shop/inventory/internal/server"
-	"shop/inventory/internal/svc"
-	"shop/inventory/inventory"
+	"shop/order/internal/config"
+	"shop/order/internal/server"
+	"shop/order/internal/svc"
+	"shop/order/order"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -17,19 +17,27 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/inventory.yaml", "the config file")
+var configFile = flag.String("f", "etc/order.yaml", "the config file")
 
 func main() {
 	flag.Parse()
+
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	db := ioc.InitDB(c)
 	redis := ioc.InitRedis(c)
-	rs := ioc.InitRedsync(redis)
-	ctx := svc.NewServiceContext(c, db, redis, rs)
+	goodsCli, err := ioc.InitGoodsClient(c)
+	if err != nil {
+		panic(err)
+	}
+	invCli, err := ioc.InitInventoryClient(c)
+	if err != nil {
+		panic(err)
+	}
+	ctx := svc.NewServiceContext(c, db, redis, goodsCli, invCli)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		inventory.RegisterInventoryServer(grpcServer, server.NewInventoryServer(ctx))
+		order.RegisterOrderServer(grpcServer, server.NewOrderServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

@@ -20,3 +20,11 @@ nacos:
   password: 'nacos'
   dataid: 'config.json'
   group: 'dev'
+
+consul:
+  host: '127.0.0.1'
+  port: 8500
+  scheme: 'http'
+  token: ''
+  datacenter: 'dc1'
+  wait_time: '30s'

@@ -51,7 +51,12 @@ func HandleGrpcErrorToHttp(err error, c *gin.Context) {
 	}
 }
 func GetUserList(ctx *gin.Context) {
-	userConn, err := grpc.Dial(fmt.Sprintf("%s:%s", global.ServerConfig.UserServer.Host, global.ServerConfig.UserServer.Port), grpc.WithInsecure())
+	addr, err := utils.DiscoverAddr("user-service")
+	if err != nil {
+		HandleGrpcErrorToHttp(err, ctx)
+		return
+	}
+	userConn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		zap.S().Errorw("[GetUserList] 连接错误", "err", err)
 	}
@@ -171,7 +176,12 @@ func Register(c *gin.Context) {
 		utils.HandleValidatorError(c, err)
 		return
 	}
-	smsConn, err := grpc.Dial(fmt.Sprintf("127.0.0.1:50052"), grpc.WithInsecure())
+	codeAddr, err := utils.DiscoverAddr("code-service")
+	if err != nil {
+		HandleGrpcErrorToHttp(err, c)
+		return
+	}
+	smsConn, err := grpc.Dial(codeAddr, grpc.WithInsecure())
 	if err != nil {
 		zap.S().Errorw("[SendSms] 连接错误", "err", err)
 		HandleGrpcErrorToHttp(err, c)
@@ -188,7 +198,12 @@ func Register(c *gin.Context) {
 			"msg": "验证码错误",
 		})
 	}
-	userConn, err := grpc.Dial(fmt.Sprintf("%s:%s", global.ServerConfig.UserServer.Host, global.ServerConfig.UserServer.Port), grpc.WithInsecure())
+	addr, err := utils.DiscoverAddr("user-service")
+	if err != nil {
+		HandleGrpcErrorToHttp(err, c)
+		return
+	}
+	userConn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		zap.S().Errorw("[PassWordLogin] 连接错误", "err", err)
 		HandleGrpcErrorToHttp(err, c)

@@ -14,5 +14,7 @@ func Routers() *gin.Engine {
 	router2.InitUserRouter(ApiGroup)
 	router2.InitBaseRouter(ApiGroup)
 	router2.InitGoodsRouter(ApiGroup)
+	router2.InitInventoryRouter(ApiGroup)
+	router2.InitOrderRouter(ApiGroup)
 	return router
 }

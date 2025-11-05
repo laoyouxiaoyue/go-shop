@@ -28,10 +28,10 @@ ConsulConfig:
   Wait_time: "30s"              # 阻塞查询超时时间
 
 ServerConfig:
-  Name:  ""         # 服务名称（在 Consul 中的注册名）
+  Name:  "goods"         # 服务名称（在 Consul 中的注册名）
   Host: 127.0.0.1               # gRPC 服务监听地址
   Port: 50053                # gRPC 服务监听端口
   Tags: ["grpc", "user"]      # 可选：服务标签
   Check_interval: "10s"       # Consul 健康检查间隔
   Check_timeout: "5s"         # Consul 健康检查超时
-  Id: "1"
+  Id: "goods-127.0.0.1-50053"
