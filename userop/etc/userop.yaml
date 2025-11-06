@@ -1,0 +1,40 @@
+Name: userop.rpc
+ListenOn: 0.0.0.0:50058
+
+Mysql:
+  Dsn: "root:root@tcp(127.0.0.1:3306)/userop?charset=utf8mb4&parseTime=True&loc=Local"
+
+RedisConfig:
+  Host: "127.0.0.1"
+  Port: 6379
+  Password: ""
+  Db: 0
+  Pool_size: 20
+
+NacosConfig:
+  Host: '127.0.0.1'
+  Port: 8848
+  Namespace: 'namespace-id'
+  User: 'nacos'
+  Password: 'nacos'
+  Dataid: 'config.json'
+  Group: 'dev'
+
+ConsulConfig:
+  # 必需配置
+  Host: "127.0.0.1"             # Consul 服务器地址
+  Port: 8500                    # Consul HTTP API 端口
+  # 可选配置
+  Scheme: "http"                # http 或 https
+  Token: ""                     # ACL token（如有ACL保护）
+  Datacenter: "dc1"             # 数据中心名称
+  Wait_time: "30s"              # 阻塞查询超时时间
+
+ServerConfig:
+  Name:  "userop"         # 服务名称（在 Consul 中的注册名）
+  Host: 127.0.0.1               # gRPC 服务监听地址
+  Port: 50058               # gRPC 服务监听端口
+  Tags: ["grpc", "userop"]      # 可选：服务标签
+  Check_interval: "10s"       # Consul 健康检查间隔
+  Check_timeout: "5s"         # Consul 健康检查超时
+  Id: "userop-127.0.0.1-50058"

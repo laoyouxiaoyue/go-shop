@@ -15,6 +15,7 @@ require (
 	github.com/nacos-group/nacos-sdk-go/v2 v2.3.3
 	github.com/pkg/errors v0.9.1
 	github.com/redis/go-redis/v9 v9.15.0
+	github.com/smartwalle/alipay/v3 v3.2.27
 	github.com/spf13/viper v1.21.0
 	github.com/stretchr/testify v1.11.1
 	github.com/zeromicro/go-zero v1.9.1
@@ -120,6 +121,9 @@ require (
 	github.com/prometheus/common v0.62.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/sagikazarmark/locafero v0.11.0 // indirect
+	github.com/smartwalle/ncrypto v1.0.4 // indirect
+	github.com/smartwalle/ngx v1.0.11 // indirect
+	github.com/smartwalle/nsign v1.0.9 // indirect
 	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/afero v1.15.0 // indirect
